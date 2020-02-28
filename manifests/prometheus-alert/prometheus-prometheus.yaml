@@ -8,7 +8,7 @@ metadata:
 spec:
   alerting:
     alertmanagers:
-    - name: alertmanager-main
+    - name: alertmanager-router
       namespace: monitoring
       port: web
   baseImage: quay-mirror.qiniu.com/prometheus/prometheus
@@ -16,7 +16,7 @@ spec:
     kubernetes.io/os: linux
   podMonitorNamespaceSelector: {}
   podMonitorSelector: {}
-  replicas: 2
+  replicas: 1 
   resources:
     requests:
       memory: 400Mi
@@ -34,3 +34,4 @@ spec:
     matchLabels:
       prometheus: alert 
   version: v2.15.2
+  additionalScrapeConfigs:

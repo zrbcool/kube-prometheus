@@ -1,0 +1,41 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: alert 
+    role: alert-rules
+  name: prometheus-alert-rules
+  namespace: monitoring
+spec:
+  groups:
+#  - name: dev-group-data.rules
+#    rules:
+#    - expr: |
+#        label_join(data_quality_monitor, "metric", " / ", "db", "exported_job", "product", "key")
+#      record: record:data_quality_monitor 
+  - name: dev-group-data
+    rules:
+    - alert: "分钟级指标同比上升"
+      annotations:
+        db: "{{ $labels.db }}"
+        job: "{{ $labels.exported_job }}"
+        partition: "{{ $labels.partition }}"
+        description: "比10分钟前上升30%!!!"
+      expr: |
+        (data_quality_monitor{period="minute"} - data_quality_monitor{period="minute"} offset 10m) / data_quality_monitor{period="minute"} offset 10m >= 0.3
+      for: 1m
+      labels:
+        route: dev-group-data
+        severity: critical
+    - alert: "分钟级指标同比下降"
+      annotations:
+        db: "{{ $labels.db }}"
+        job: "{{ $labels.exported_job }}"
+        partition: "{{ $labels.partition }}"
+        description: "比10分钟前下降30%!!!"
+      expr: |
+        (data_quality_monitor{period="minute"} - data_quality_monitor{period="minute"} offset 10m) / data_quality_monitor{period="minute"} offset 10m <= -0.3
+      for: 1m
+      labels:
+        route: dev-group-data
+        severity: critical

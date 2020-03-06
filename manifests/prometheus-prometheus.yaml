@@ -11,6 +11,9 @@ spec:
     - name: alertmanager-main
       namespace: monitoring
       port: web
+    - name: alertmanager-router
+      namespace: monitoring
+      port: web
   baseImage: quay-mirror.qiniu.com/prometheus/prometheus
   nodeSelector:
     kubernetes.io/os: linux

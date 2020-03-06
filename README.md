@@ -74,7 +74,7 @@ This adapter is an Extension API Server and Kubernetes needs to be have this fea
 To try out this stack, start [minikube](https://github.com/kubernetes/minikube) with the following command:
 
 ```shell
-$ minikube delete && minikube start --kubernetes-version=v1.16.0 --memory=6g --bootstrapper=kubeadm --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --extra-config=scheduler.address=0.0.0.0 --extra-config=controller-manager.address=0.0.0.0
+$ minikube delete && minikube start --kubernetes-version=v1.17.3 --memory=6g --bootstrapper=kubeadm --extra-config=kubelet.authentication-token-webhook=true --extra-config=kubelet.authorization-mode=Webhook --extra-config=scheduler.address=0.0.0.0 --extra-config=controller-manager.address=0.0.0.0
 ```
 
 The kube-prometheus stack includes a resource metrics API server, so the metrics-server addon is not necessary. Ensure the metrics-server addon is disabled on minikube:
@@ -100,7 +100,7 @@ kubectl create -f manifests/
 ```
 
 We create the namespace and CustomResourceDefinitions first to avoid race conditions when deploying the monitoring components.
-Alternatively, the resources in both folders can be applied with a single command 
+Alternatively, the resources in both folders can be applied with a single command
 `kubectl create -f manifests/setup -f manifests`, but it may be necessary to run the command multiple times for all components to
 be created successfullly.
 
@@ -154,12 +154,12 @@ Install this library in your own project with [jsonnet-bundler](https://github.c
 $ mkdir my-kube-prometheus; cd my-kube-prometheus
 $ jb init  # Creates the initial/empty `jsonnetfile.json`
 # Install the kube-prometheus dependency
-$ jb install github.com/coreos/kube-prometheus/jsonnet/kube-prometheus@release-0.1 # Creates `vendor/` & `jsonnetfile.lock.json`, and fills in `jsonnetfile.json`
+$ jb install github.com/coreos/kube-prometheus/jsonnet/kube-prometheus@release-0.4 # Creates `vendor/` & `jsonnetfile.lock.json`, and fills in `jsonnetfile.json`
 ```
 
 > `jb` can be installed with `go get github.com/jsonnet-bundler/jsonnet-bundler/cmd/jb`
 
-> An e.g. of how to install a given version of this library: `jb install github.com/coreos/kube-prometheus/jsonnet/kube-prometheus@release-0.1`
+> An e.g. of how to install a given version of this library: `jb install github.com/coreos/kube-prometheus/jsonnet/kube-prometheus@release-0.4`
 
 In order to update the kube-prometheus dependency, simply use the jsonnet-bundler update functionality:
 ```shell
@@ -173,6 +173,8 @@ e.g. of how to compile the manifests: `./build.sh example.jsonnet`
 > before compiling, install `gojsontoyaml` tool with `go get github.com/brancz/gojsontoyaml`
 
 Here's [example.jsonnet](example.jsonnet):
+
+> Note: some of the following components must be configured beforehand. See [configuration](#configuration) and [customization-examples](#customization-examples).
 
 [embedmd]:# (example.jsonnet)
 ```jsonnet
@@ -240,7 +242,7 @@ Now simply use `kubectl` to install Prometheus and Grafana as per your configura
 $ kubectl apply -f manifests/setup
 $ kubectl apply -f manifests/
 ```
-Alternatively, the resources in both folders can be applied with a single command 
+Alternatively, the resources in both folders can be applied with a single command
 `kubectl apply -Rf manifests`, but it may be necessary to run the command multiple times for all components to
 be created successfullly.
 
@@ -570,7 +572,7 @@ local kp = (import 'kube-prometheus/kube-prometheus.libsonnet') + {
 
 In order to Prometheus be able to discovery and scrape services inside the additional namespaces specified in previous step you need to define a ServiceMonitor resource.
 
-> Typically it is up to the users of a namespace to provision the ServiceMonitor resource, but in case you want to generate it with the same tooling as the rest of the cluster monitoring infrastructure, this is a guide on how to achieve this. 
+> Typically it is up to the users of a namespace to provision the ServiceMonitor resource, but in case you want to generate it with the same tooling as the rest of the cluster monitoring infrastructure, this is a guide on how to achieve this.
 
 You can define ServiceMonitor resources in your `jsonnet` spec. See the snippet bellow:
 
@@ -656,9 +658,10 @@ Should the Prometheus `/targets` page show kubelet targets, but not able to succ
 
 As described in the [Prerequisites](#prerequisites) section, in order to retrieve metrics from the kubelet token authentication and authorization must be enabled. Some Kubernetes setup tools do not enable this by default.
 
-If you are using Google's GKE product, see [cAdvisor support](docs/GKE-cadvisor-support.md).
+- If you are using Google's GKE product, see [cAdvisor support](docs/GKE-cadvisor-support.md).
+- If you are using AWS EKS, see [AWS EKS CNI support](docs/EKS-cni-support.md).
+- If you are using Weave Net, see [Weave Net support](docs/weave-net-support.md).
 
-If you are using AWS EKS, see [AWS EKS CNI support](docs/EKS-cni-support.md)
 #### Authentication problem
 
 The Prometheus `/targets` page will show the kubelet job with the error `403 Unauthorized`, when token authentication is not enabled. Ensure, that the `--authentication-token-webhook=true` flag is enabled on all kubelet configurations.

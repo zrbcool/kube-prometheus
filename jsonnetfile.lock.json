@@ -72,8 +72,8 @@
           "subdir": "jsonnet/kube-state-metrics"
         }
       },
-      "version": "2148cb9bd5ba51d3911a93c4d61ddf084999f8c7",
-      "sum": "a+rigolTUlmpxlwu2hxnPvZ50Cg5WYuuC7irTma5Xbo="
+      "version": "89ede10b19d7ef0145777717351cabe14b113c01",
+      "sum": "cJjGZaLBjcIGrLHZLjRPU9c3KL+ep9rZTb9dbALSKqA="
     },
     {
       "name": "kube-state-metrics-mixin",
@@ -83,7 +83,7 @@
           "subdir": "jsonnet/kube-state-metrics-mixin"
         }
       },
-      "version": "2148cb9bd5ba51d3911a93c4d61ddf084999f8c7",
+      "version": "89ede10b19d7ef0145777717351cabe14b113c01",
       "sum": "E1GGavnf9PCWBm4WVrxWnc0FIj72UcbcweqGioWrOdU="
     },
     {
@@ -105,8 +105,8 @@
           "subdir": "docs/node-mixin"
         }
       },
-      "version": "92ea3c6a3f0ea2d1d55de168e65037e2313f9940",
-      "sum": "7vEamDTP9AApeiF4Zu9ZyXzDIs3rYHzwf9k7g8X+wsg="
+      "version": "0107bc794204f50d887898da60032da890637471",
+      "sum": "VKdF0zPMSCiuIuXWblSz2VOeBaXzQ7fp40vz9sxj+Bo="
     },
     {
       "name": "prometheus",
@@ -127,8 +127,8 @@
           "subdir": "jsonnet/prometheus-operator"
         }
       },
-      "version": "89f35ef22db0dc24c523bf8be473bcbcf9ac81f6",
-      "sum": "KCO153lAOWmWfoj3rQGhLB+8UmyvQ2Bghu/ewDqVum4="
+      "version": "59bdf55453ba08b4ed7c271cb3c6627058945ed5",
+      "sum": "qwMbUQkdPhAn9Sl4OVLgzmNOuOTnRLUmvv14I0unsa8="
     },
     {
       "name": "promgrafonnet",

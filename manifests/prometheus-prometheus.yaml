@@ -18,7 +18,9 @@ spec:
   nodeSelector:
     kubernetes.io/os: linux
   podMonitorNamespaceSelector: {}
-  podMonitorSelector: {}
+  podMonitorSelector:
+    matchLabels:
+      prometheus: k8s 
   replicas: 2
   resources:
     requests:
@@ -31,7 +33,9 @@ spec:
     fsGroup: 2000
     runAsNonRoot: true
     runAsUser: 1000
-  serviceAccountName: prometheus-k8s
+  serviceAccountName: prometheus-k8s 
   serviceMonitorNamespaceSelector: {}
-  serviceMonitorSelector: {}
+  serviceMonitorSelector:
+    matchLabels:
+      prometheus: k8s 
   version: v2.15.2
